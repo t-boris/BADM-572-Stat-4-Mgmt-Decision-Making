@@ -7,3 +7,7 @@ dist-ssr
 npm-debug.log*
 
 _to_delete/
+
+# local secrets — never commit
+.vercel-auth.json
+.vercel/
