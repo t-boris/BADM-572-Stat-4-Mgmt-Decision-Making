@@ -1,0 +1,118 @@
+/* -------------------------------------------------------------------------- */
+/* Theme tokens — semantic CSS variables. Tailwind reads these via rgb(var()). */
+/* All values are R G B triplets (no commas, no rgb()) so Tailwind's          */
+/* <alpha-value> placeholder can compose opacity into them.                   */
+/* -------------------------------------------------------------------------- */
+
+:root,
+:root[data-theme="light"] {
+  /* surfaces */
+  --bg:        248 250 252;   /* slate-50  */
+  --surface:   255 255 255;   /* white     */
+  --elevated: 255 255 255;
+  --muted:    241 245 249;    /* slate-100 */
+  --border:   226 232 240;    /* slate-200 */
+
+  /* ink */
+  --ink:        15  23  42;   /* slate-900 */
+  --ink-dim:    71  85 105;   /* slate-600 */
+
+  /* accent + status */
+  --accent:        79  70 229; /* indigo-600 */
+  --accent-soft: 199 210 254;  /* indigo-200 */
+  --success:       16 185 129; /* emerald-500 */
+  --warning:      245 158  11; /* amber-500   */
+  --danger:       239  68  68; /* red-500     */
+
+  /* module rails (8 distinct hues) */
+  --m1:  99 102 241;  /* indigo-500   */
+  --m2:  14 165 233;  /* sky-500      */
+  --m3:  20 184 166;  /* teal-500     */
+  --m4: 132 204  22;  /* lime-500     */
+  --m5: 234 179   8;  /* amber-400    */
+  --m6: 249 115  22;  /* orange-500   */
+  --m7: 244  63  94;  /* rose-500     */
+  --m8: 168  85 247;  /* violet-500   */
+}
+
+:root.dark,
+:root[data-theme="dark"] {
+  --bg:        7  11  24;     /* near-black blue */
+  --surface:  15  20  41;     /* slate-950-ish   */
+  --elevated: 22  29  56;
+  --muted:    30  41  79;
+  --border:   42  56  99;
+
+  --ink:        226 232 240;
+  --ink-dim:    148 163 184;
+
+  --accent:        129 140 248; /* indigo-400 */
+  --accent-soft:    49  46 129; /* indigo-900 */
+  --success:        52 211 153;
+  --warning:       251 191  36;
+  --danger:        248 113 113;
+
+  --m1: 129 140 248;
+  --m2:  56 189 248;
+  --m3:  45 212 191;
+  --m4: 163 230  53;
+  --m5: 250 204  21;
+  --m6: 251 146  60;
+  --m7: 251 113 133;
+  --m8: 192 132 252;
+}
+
+html, body, #root { height: 100%; }
+body {
+  background-color: rgb(var(--bg));
+  color: rgb(var(--ink));
+  font-feature-settings: "ss01", "cv01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* utility: a thin gradient text */
+.gradient-text {
+  background: linear-gradient(
+    90deg,
+    rgb(var(--accent)) 0%,
+    rgb(var(--m3)) 50%,
+    rgb(var(--m6)) 100%
+  );
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+}
+
+/* scrollbars */
+* { scrollbar-width: thin; scrollbar-color: rgb(var(--border)) transparent; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb {
+  background: rgb(var(--border));
+  border-radius: 9999px;
+}
+*::-webkit-scrollbar-thumb:hover { background: rgb(var(--ink-dim) / 0.5); }
+
+/* focus ring */
+:where(button, a, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* selection */
+::selection {
+  background: rgb(var(--accent) / 0.35);
+  color: rgb(var(--ink));
+}
+
+/* reduce motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

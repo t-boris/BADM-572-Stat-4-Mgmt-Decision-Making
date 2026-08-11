@@ -1,0 +1,53 @@
+@import "./theme.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ----- reusable component classes ----- */
+@layer components {
+  .card {
+    @apply rounded-2xl border border-border bg-surface shadow-soft;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-0.5 hover:shadow-glow;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/60 px-3 py-1 text-xs font-medium text-ink-dim;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn bg-accent text-white shadow-soft hover:opacity-90 hover:shadow-glow;
+  }
+  .btn-secondary {
+    @apply btn border border-border bg-surface text-ink hover:bg-muted;
+  }
+  .btn-ghost {
+    @apply btn text-ink-dim hover:bg-muted hover:text-ink;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm text-ink placeholder:text-ink-dim/60 focus:border-accent;
+  }
+
+  .kbd {
+    @apply rounded-md border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px] text-ink-dim;
+  }
+}
+
+/* shimmer placeholder */
+.shimmer {
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(var(--ink) / 0.06) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2.4s linear infinite;
+}

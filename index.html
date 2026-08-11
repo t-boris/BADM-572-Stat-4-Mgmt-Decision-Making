@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b1020" />
+    <meta
+      name="description"
+      content="Visual learning companion for UIUC iMBA BADM 572 — Statistics for Management Decision Making. Bilingual (RU/EN) module notes, interactive charts, Excel walkthroughs, glossary and quizzes."
+    />
+    <title>BADM 572 · Statistics for Management Decision Making</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      // Prevent flash of wrong theme / wrong language before React mounts.
+      (function () {
+        try {
+          var stored = localStorage.getItem("badm572-theme");
+          var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var theme = stored || (prefersDark ? "dark" : "light");
+          document.documentElement.classList.toggle("dark", theme === "dark");
+          document.documentElement.dataset.theme = theme;
+
+          var lang = localStorage.getItem("badm572-lang");
+          if (lang !== "ru" && lang !== "en") {
+            var nav = (navigator.languages && navigator.languages[0]) || navigator.language || "en";
+            var tz = "";
+            try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+            var ruTz = /^(Europe\/(Moscow|Kaliningrad|Samara|Saratov|Volgograd|Astrakhan|Ulyanovsk|Kirov|Minsk|Kyiv|Kiev|Riga|Tallinn|Vilnius)|Asia\/(Yekaterinburg|Omsk|Novosibirsk|Krasnoyarsk|Irkutsk|Yakutsk|Vladivostok|Magadan|Kamchatka|Almaty|Tashkent|Bishkek|Yerevan|Baku|Tbilisi)|Atlantic\/Reykjavik$^)/;
+            lang = /^(ru|be|uk|kk|ky|hy|az|uz|tg|mo)/i.test(nav) || ruTz.test(tz) ? "ru" : "en";
+          }
+          document.documentElement.lang = lang;
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
