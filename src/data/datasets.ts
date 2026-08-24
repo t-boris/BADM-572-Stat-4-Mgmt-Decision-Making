@@ -268,3 +268,206 @@ export const VARIABLE_DRILL: {
     },
   },
 ];
+
+/* ========================================================================== */
+/*  Module 2 — Descriptive Statistics and Probability Distributions.          */
+/*  Every figure below is SOURCE: taken verbatim from the Gies eBook          */
+/*  transcript of Module 2 unless marked otherwise.                           */
+/* ========================================================================== */
+
+/** SOURCE: Lesson 2-1.1, Slide 5 — dollars spent by 7 website customers. */
+export const WEBSITE_SPEND = [85.68, 67.21, 98.08, 34.78, 56.98, 27.93, 40.72];
+
+/**
+ * SOURCE: Lesson 2-1.1, Slide 9 — ten classmates' salaries three years after
+ * graduation. Mean $65,000 · median $64,500 · s = $6,912.15.
+ */
+export const CLASSMATE_SALARIES = [
+  57000, 58000, 59000, 62000, 64000, 65000, 66000, 68000, 71000, 80000,
+];
+
+/** SOURCE: the eleventh classmate — drafted by a pro basketball team. */
+export const BASKETBALL_SALARY = 8000000;
+
+/** SOURCE: Lesson 2-1.1, Slide 10 — five candidate sites, annual rent. */
+export const SITE_RENTALS: { site: string; rent: number }[] = [
+  { site: "A", rent: 84000 },
+  { site: "B", rent: 78000 },
+  { site: "C", rent: 114000 },
+  { site: "D", rent: 103200 },
+  { site: "E", rent: 93600 },
+];
+
+/** SOURCE: Lesson 2-1.1, Slide 12 — stocks that closed up, a symmetric shape. */
+export const STOCKS_UP: { value: number; frequency: number }[] = [
+  { value: 30, frequency: 1500 },
+  { value: 31, frequency: 2000 },
+  { value: 35, frequency: 6000 },
+  { value: 40, frequency: 8200 },
+  { value: 45, frequency: 4000 },
+  { value: 50, frequency: 1000 },
+];
+
+/**
+ * SOURCE: Lesson 2-2.1, Slide 26 — processing time in two emergency rooms.
+ * Both average 5 minutes; ER A has a range of 2, ER B a range of 6.
+ */
+export const ER_A: { minutes: number; frequency: number }[] = [
+  { minutes: 4, frequency: 8 },
+  { minutes: 5, frequency: 14 },
+  { minutes: 6, frequency: 6 },
+];
+
+export const ER_B: { minutes: number; frequency: number }[] = [
+  { minutes: 2, frequency: 2 },
+  { minutes: 3, frequency: 3 },
+  { minutes: 4, frequency: 5 },
+  { minutes: 5, frequency: 11 },
+  { minutes: 6, frequency: 5 },
+  { minutes: 7, frequency: 3 },
+  { minutes: 8, frequency: 2 },
+];
+
+/** SOURCE: Lesson 2-2.1, Slide 33 — the tight sample and the spread-out one. */
+export const HISTOGRAM_A: { value: number; frequency: number }[] = [
+  { value: 0, frequency: 1 },
+  { value: 1, frequency: 3 },
+  { value: 2, frequency: 5 },
+  { value: 3, frequency: 7 },
+  { value: 4, frequency: 9 },
+  { value: 5, frequency: 11 },
+  { value: 6, frequency: 10 },
+  { value: 7, frequency: 8 },
+  { value: 8, frequency: 6 },
+  { value: 9, frequency: 4 },
+  { value: 10, frequency: 2 },
+];
+
+export const HISTOGRAM_B: { value: number; frequency: number }[] = [
+  { value: 0, frequency: 2 },
+  { value: 1, frequency: 3 },
+  { value: 2, frequency: 4 },
+  { value: 3, frequency: 5 },
+  { value: 4, frequency: 6 },
+  { value: 5, frequency: 7 },
+  { value: 6, frequency: 6 },
+  { value: 7, frequency: 5 },
+  { value: 8, frequency: 4 },
+  { value: 9, frequency: 3 },
+  { value: 10, frequency: 2 },
+];
+
+/** SOURCE: Lesson 2-1.2 / 2-2.2 — New York daily temperature, 26,770 rows. */
+export const NY_TEMPERATURE = {
+  count: 26770,
+  mean: 55.2,
+  median: 55.9,
+  stdevS: 17.37,
+  unit: "°F",
+} as const;
+
+/** SOURCE: Lesson 2-3.1, Slide 42 — ten salaries for a comparable job title. */
+export const PEER_SALARIES = [
+  115472, 105845, 105582, 102551, 98188, 94220, 91380, 89828, 89697, 89519,
+];
+
+/** SOURCE: Lesson 2-3.1, Slide 48 — payscale.com percentiles, business analyst. */
+export const ANALYST_PERCENTILES: { percentile: number; salary: number }[] = [
+  { percentile: 10, salary: 43406 },
+  { percentile: 25, salary: 48469 },
+  { percentile: 50, salary: 54030 },
+  { percentile: 75, salary: 61346 },
+  { percentile: 90, salary: 68008 },
+];
+
+/**
+ * SOURCE: Lesson 2-3.1 — the job-offer case. The slide prints σ ≈ $8,900 once
+ * but every calculation, and the Excel result 0.898948, uses $8,600.
+ */
+export const ANALYST_OFFER = {
+  median: 54030,
+  stdev: 8600,
+  offer: 65000,
+  z: 1.27,
+  percentile: 0.898948,
+} as const;
+
+/** SOURCE: Lesson 2-3.1, Slide 50 — TrueCar price bands for a Camry XLE V6. */
+export const CAMRY_PRICES = {
+  sales: 201,
+  exceptionalBelow: 27545,
+  trueCarEstimate: 27513,
+  greatBelow: 29272,
+  averagePaid: 29510,
+  factoryInvoice: 30494,
+  aboveMarketFrom: 30505,
+  msrp: 32904,
+  priceCertainty: 0.9769,
+} as const;
+
+/** SOURCE: Lesson 2-3.1, Slide 51 — EPA fuel-economy label, small SUV class. */
+export const MPG_LABEL = { vehicle: 26, classMin: 16, classMax: 32 } as const;
+
+/** SOURCE: Lesson 2-4.1, Slide 71 — number of siblings among 20 respondents. */
+export const SIBLINGS: { value: number; frequency: number }[] = [
+  { value: 0, frequency: 3 },
+  { value: 1, frequency: 6 },
+  { value: 2, frequency: 5 },
+  { value: 3, frequency: 4 },
+  { value: 4, frequency: 2 },
+];
+
+/**
+ * SOURCE: Lesson 2-4.1, Slide 77 — customers waiting for a bank teller,
+ * 32 observations. E(X) = 2.16 · P(X ≥ 4) = 0.188.
+ */
+export const BANK_QUEUE: { value: number; frequency: number }[] = [
+  { value: 0, frequency: 3 },
+  { value: 1, frequency: 10 },
+  { value: 2, frequency: 8 },
+  { value: 3, frequency: 5 },
+  { value: 4, frequency: 3 },
+  { value: 5, frequency: 2 },
+  { value: 6, frequency: 1 },
+];
+
+/**
+ * RECONSTRUCTED: Lesson 2-4.2 — daily demand 1…20 at a convenience store.
+ * The video shows only the first rows (3 and 10) plus the totals, so the
+ * remaining occurrences were rebuilt to hit the published SUM = 140,
+ * SUMPRODUCT mean = 11.49 and σ = 6.205 to two decimals.
+ */
+export const STORE_DEMAND: { value: number; frequency: number }[] = [
+  { value: 1, frequency: 3 },
+  { value: 2, frequency: 10 },
+  { value: 3, frequency: 8 },
+  { value: 4, frequency: 9 },
+  { value: 5, frequency: 7 },
+  { value: 6, frequency: 7 },
+  { value: 7, frequency: 3 },
+  { value: 8, frequency: 2 },
+  { value: 9, frequency: 5 },
+  { value: 10, frequency: 5 },
+  { value: 11, frequency: 5 },
+  { value: 12, frequency: 5 },
+  { value: 13, frequency: 6 },
+  { value: 14, frequency: 6 },
+  { value: 15, frequency: 7 },
+  { value: 16, frequency: 12 },
+  { value: 17, frequency: 10 },
+  { value: 18, frequency: 9 },
+  { value: 19, frequency: 9 },
+  { value: 20, frequency: 12 },
+];
+
+/** SOURCE: Lesson 2-4.2 — the numbers the video reports for the demand data. */
+export const STORE_DEMAND_PUBLISHED = {
+  total: 140,
+  expectedValue: 11.49,
+  stdev: 6.205,
+  lower: 5.28,
+  upper: 17.69,
+} as const;
+
+/** SOURCE: Lessons 2-5.4…2-5.7 and 2-6 — the SAT section scale. */
+export const SAT = { mean: 500, stdev: 100 } as const;

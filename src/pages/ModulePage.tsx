@@ -20,9 +20,11 @@ import { useI18n } from "@/i18n/I18nContext";
 import type { ModuleId } from "@/lib/types";
 
 const Module1Content = lazy(() => import("@/components/modules/Module1Content"));
+const Module2Content = lazy(() => import("@/components/modules/Module2Content"));
 
 const MODULE_CONTENT: Partial<Record<ModuleId, ComponentType>> = {
   1: Module1Content,
+  2: Module2Content,
 };
 
 export default function ModulePage() {
@@ -168,7 +170,7 @@ export default function ModulePage() {
         {prev ? (
           <Link
             to={`/modules/${prev.id}`}
-            className="card card-hover flex flex-1 items-center gap-3 p-4"
+            className="card card-hover flex min-w-0 flex-1 items-center gap-3 p-4"
           >
             <ArrowLeft size={16} className="text-ink-dim" />
             <div className="min-w-0">
@@ -184,7 +186,7 @@ export default function ModulePage() {
         {next ? (
           <Link
             to={`/modules/${next.id}`}
-            className="card card-hover flex flex-1 items-center justify-end gap-3 p-4 text-right"
+            className="card card-hover flex min-w-0 flex-1 items-center justify-end gap-3 p-4 text-right"
           >
             <div className="min-w-0">
               <div className="text-[11px] uppercase tracking-wider text-ink-dim">

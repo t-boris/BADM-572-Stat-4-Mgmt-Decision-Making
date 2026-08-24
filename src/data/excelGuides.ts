@@ -19,7 +19,8 @@ export interface ExcelGuide {
 
 /**
  * Transcribed from the Excel illustration videos of Module 1
- * (Lessons 1-2.2, 1-2.3, 1-2.4, 1-3.2, 1-4.2, 1-5.2).
+ * (Lessons 1-2.2, 1-2.3, 1-2.4, 1-3.2, 1-4.2, 1-5.2) and Module 2
+ * (Lessons 2-1.2, 2-2.2, 2-3.2, 2-4.2, 2-5.2…2-5.7).
  */
 export const EXCEL_GUIDES: ExcelGuide[] = [
   {
@@ -336,6 +337,382 @@ export const EXCEL_GUIDES: ExcelGuide[] = [
     takeaway: {
       ru: "Если ось X — время, та же диаграмма называется временным рядом (time series).",
       en: "When the X axis is time, the very same chart is called a time series.",
+    },
+  },
+
+  /* ══════════════════════ Module 2 ══════════════════════ */
+  {
+    id: "m2-mean-median",
+    lesson: "Lesson 2-1.2",
+    title: {
+      ru: "Среднее и медиана на 26 770 наблюдениях",
+      en: "Mean and median across 26,770 observations",
+    },
+    goal: {
+      ru: "Описать климат Нью-Йорка двумя числами и заодно определить форму распределения.",
+      en: "Describe New York's climate in two numbers and read the distribution's shape while you are at it.",
+    },
+    dataset: {
+      ru: "Daily Temperature.xlsx — лист Data, столбец C, 26 770 записей (°F)",
+      en: "Daily Temperature.xlsx — Data sheet, column C, 26,770 records (°F)",
+    },
+    steps: [
+      {
+        title: { ru: "Начните набирать имя функции", en: "Start typing the function name" },
+        body: {
+          ru: "Наберите «=av» — Excel покажет AVERAGE, AVERAGEA, AVERAGEIF, AVERAGEIFS и подскажет, что вернёт каждая. Нам нужна первая: среднее арифметическое аргументов. Нажмите Tab.",
+          en: "Type '=av' and Excel lists AVERAGE, AVERAGEA, AVERAGEIF and AVERAGEIFS, telling you what each returns. We want the first — the arithmetic mean of its arguments. Press Tab.",
+        },
+        formula: "=AV…",
+      },
+      {
+        title: { ru: "Выделите столбец одним движением", en: "Grab the column in one move" },
+        body: {
+          ru: "Перечислять C1, C2, C3 бессмысленно, тянуть мышью по 26 тысячам строк — тоже. Кликните первую ячейку с данными и зажмите Ctrl+Shift+↓: выделится весь непрерывный диапазон.",
+          en: "Listing C1, C2, C3 is pointless and dragging through 26,000 rows is worse. Click the first data cell and hold Ctrl+Shift+↓ — the entire contiguous range selects at once.",
+        },
+        formula: "=AVERAGE(C7:C26776)",
+        shortcut: "Ctrl + Shift + ↓",
+      },
+      {
+        title: { ru: "Прочитайте среднее", en: "Read the mean" },
+        body: {
+          ru: "Закройте скобку, Enter — получится 55,2 °F. Кликните по ячейке и проверьте в строке формул, что диапазон захвачен правильно: C7:C26776.",
+          en: "Close the parenthesis, press Enter and you get 55.2 °F. Click the cell and check in the formula bar that the range was picked up correctly: C7:C26776.",
+        },
+        formula: "=AVERAGE(C7:C26776) → 55,2",
+      },
+      {
+        title: { ru: "Повторите с медианой", en: "Repeat for the median" },
+        body: {
+          ru: "Та же механика: =MEDIAN, Tab, первая ячейка, Ctrl+Shift+↓, Enter. Медиана — точка, выше и ниже которой температура оказывается в 50 % случаев.",
+          en: "Same mechanics: =MEDIAN, Tab, first cell, Ctrl+Shift+↓, Enter. The median is the point above and below which the temperature lands half the time.",
+        },
+        formula: "=MEDIAN(C7:C26776) → 55,9",
+        shortcut: "Ctrl + Shift + ↓",
+      },
+      {
+        title: { ru: "Сравните два числа", en: "Compare the two numbers" },
+        body: {
+          ru: "55,2 против 55,9 — почти совпадают, значит распределение практически симметрично. Если бы среднее оказалось заметно выше медианы, стоило бы искать длинный правый хвост.",
+          en: "55.2 against 55.9 — near enough identical, so the distribution is practically symmetrical. Had the mean come out well above the median you would go looking for a long right tail.",
+        },
+      },
+    ],
+    takeaway: {
+      ru: "Пара AVERAGE + MEDIAN — самая дешёвая диагностика формы распределения: никакого графика для неё не нужно.",
+      en: "AVERAGE plus MEDIAN is the cheapest shape diagnostic there is — and it needs no chart at all.",
+    },
+  },
+  {
+    id: "m2-stdev",
+    lesson: "Lesson 2-2.2",
+    title: {
+      ru: "Стандартное отклонение: STDEV.S или STDEV.P",
+      en: "Standard deviation: STDEV.S or STDEV.P",
+    },
+    goal: {
+      ru: "Узнать, насколько типична средняя температура 55,2 °F, и не перепутать выборку с совокупностью.",
+      en: "Find out how typical that 55.2 °F average really is — without confusing a sample for a population.",
+    },
+    dataset: {
+      ru: "Daily Temperature.xlsx — лист Mean_Median",
+      en: "Daily Temperature.xlsx — Mean_Median sheet",
+    },
+    steps: [
+      {
+        title: { ru: "Найдите функцию", en: "Find the function" },
+        body: {
+          ru: "Наберите «=st» — выпадет восемь функций: STANDARDIZE, STDEV.P, STDEV.S, STDEVA, STDEVPA и другие. Читайте подсказку под каждой, а не выбирайте первую попавшуюся.",
+          en: "Type '=st' and eight functions drop down: STANDARDIZE, STDEV.P, STDEV.S, STDEVA, STDEVPA and more. Read the hint under each rather than grabbing the first.",
+        },
+        formula: "=ST…",
+      },
+      {
+        title: { ru: "Выберите .S, а не .P", en: "Pick .S, not .P" },
+        body: {
+          ru: "STDEV.P считает по всей совокупности (делит на N). Но 26 770 записей о погоде — это выборка: совокупность включает все дни, которые были и будут. Значит STDEV.S, которая делит на n − 1.",
+          en: "STDEV.P assumes the entire population and divides by N. But 26,770 weather records are a sample — the population is every day past and future. So STDEV.S it is, dividing by n − 1.",
+        },
+        formula: "=STDEV.S(…)",
+      },
+      {
+        title: { ru: "Выделите данные и получите ответ", en: "Select the data and read the answer" },
+        body: {
+          ru: "Tab, первая ячейка, Ctrl+Shift+↓, закрыть скобку, Enter. Получается 17,37 °F. По мере роста выборки STDEV.S и STDEV.P сходятся, но выбирать всё равно нужно осознанно.",
+          en: "Tab, first cell, Ctrl+Shift+↓, close the parenthesis, Enter. Out comes 17.37 °F. STDEV.S and STDEV.P converge as the sample grows, but the choice still has to be deliberate.",
+        },
+        formula: "=STDEV.S(C7:C26776) → 17,37",
+        shortcut: "Ctrl + Shift + ↓",
+      },
+      {
+        title: { ru: "Переведите σ в утверждение о погоде", en: "Turn σ into a statement about weather" },
+        body: {
+          ru: "Если температура распределена приблизительно нормально, то 68 % дней укладываются в 55 ± 17 °F, то есть примерно от 38 до 73 °F, а 95 % дней — в 55 ± 34 °F. Вот ради чего мы извлекали корень: σ в градусах прибавляется к среднему в градусах.",
+          en: "If the temperature is roughly normal, 68 % of days fall inside 55 ± 17 °F — about 38 to 73 °F — and 95 % inside 55 ± 34 °F. This is what the square root was for: σ in degrees adds to a mean in degrees.",
+        },
+        formula: "x̄ ± 1s = 37,8 … 72,6 °F",
+      },
+    ],
+    takeaway: {
+      ru: "Размер набора не превращает выборку в совокупность. Спросите себя: существуют ли наблюдения этого типа за пределами таблицы?",
+      en: "Size never turns a sample into a population. Ask yourself whether observations of that kind exist outside your table.",
+    },
+  },
+  {
+    id: "m2-zscore",
+    lesson: "Lesson 2-3.2",
+    title: {
+      ru: "Z-оценка и процентиль вашей оферты",
+      en: "The z-score and the percentile of your job offer",
+    },
+    goal: {
+      ru: "Перевести абсолютную сумму 65 000 $ в позицию среди всех, кто получает похожие предложения.",
+      en: "Turn an absolute $65,000 into a position among everyone receiving comparable offers.",
+    },
+    dataset: {
+      ru: "Данные salary.com: медиана 54 030 $, стандартное отклонение 8 600 $",
+      en: "salary.com figures: median $54,030, standard deviation $8,600",
+    },
+    steps: [
+      {
+        title: { ru: "Посчитайте z вручную", en: "Compute z by hand first" },
+        body: {
+          ru: "z = (65 000 − 54 030) / 8 600 = 1,27. Оферта на 1,27 стандартного отклонения выше среднего. По эмпирическому правилу это между 84-м и 97,5-м процентилем — уже полезная прикидка.",
+          en: "z = (65,000 − 54,030) / 8,600 = 1.27. The offer sits 1.27 standard deviations above the mean. By the Empirical Rule that lands between the 84th and 97.5th percentile — already a useful estimate.",
+        },
+        formula: "z = (x − μ) / σ = 1,27",
+      },
+      {
+        title: { ru: "Разберитесь в семействе NORM", en: "Sort out the NORM family" },
+        body: {
+          ru: "Наберите «=nor» — появятся NORM.DIST, NORM.INV, NORM.S.DIST, NORM.S.INV. Точка S означает стандартное нормальное распределение (μ = 0, σ = 1): такой функции не нужны μ и σ. DIST идёт от значения к вероятности, INV — обратно.",
+          en: "Type '=nor' and up come NORM.DIST, NORM.INV, NORM.S.DIST and NORM.S.INV. The .S marks the standard normal (μ = 0, σ = 1), which needs no μ or σ. DIST goes from value to probability, INV goes back.",
+        },
+        formula: "=NOR…",
+      },
+      {
+        title: { ru: "Получите точный процентиль", en: "Get the exact percentile" },
+        body: {
+          ru: "Четыре аргумента: x, среднее, стандартное отклонение и cumulative. Последний всегда 1 — единица трактуется как TRUE, ноль как FALSE, а функция плотности в этом курсе не нужна.",
+          en: "Four arguments: x, mean, standard deviation and cumulative. The last is always 1 — one reads as TRUE, zero as FALSE, and the density option is never needed in this course.",
+        },
+        formula: "=NORM.DIST(65000; 54030; 8600; 1) → 0,898948",
+      },
+      {
+        title: { ru: "Проверьте себя обратной функцией", en: "Check yourself with the inverse" },
+        body: {
+          ru: "NORM.S.INV принимает вероятность и возвращает z. Подайте на вход полученные 0,8989 — вернётся 1,2756, то есть тот же 1,27, что вы посчитали руками. Круг замкнулся.",
+          en: "NORM.S.INV takes a probability and returns a z. Feed it the 0.8989 you just got and it hands back 1.2756 — the same 1.27 you worked out by hand. The circle closes.",
+        },
+        formula: "=NORM.S.INV(0,898948) → 1,275581",
+      },
+    ],
+    takeaway: {
+      ru: "NORM.DIST за один шаг делает то, что вручную требовало двух: стандартизацию и поиск площади. Excel считает z за вас.",
+      en: "NORM.DIST does in one step what took two by hand — standardizing and looking up the area. Excel computes the z for you.",
+    },
+  },
+  {
+    id: "m2-expected-value",
+    lesson: "Lesson 2-4.2",
+    title: {
+      ru: "Ожидаемый спрос и его разброс через SUMPRODUCT",
+      en: "Expected demand and its spread with SUMPRODUCT",
+    },
+    goal: {
+      ru: "По журналу наблюдений понять, сколько товара держать на полке.",
+      en: "Turn a log of observations into a decision about how much stock to keep on the shelf.",
+    },
+    dataset: {
+      ru: "Expected Value.xlsx — дневной спрос 1…20 и число дней, всего 140 наблюдений",
+      en: "Expected Value.xlsx — daily demand 1…20 with the number of days, 140 observations in all",
+    },
+    steps: [
+      {
+        title: { ru: "Найдите итог наблюдений", en: "Total the observations" },
+        body: {
+          ru: "Вероятность каждого уровня спроса — это его частота, делённая на общее число наблюдений. Сначала посчитайте знаменатель: =SUM по столбцу Occurrences даёт 140.",
+          en: "Each demand level's probability is its frequency over the total number of observations, so compute the denominator first: =SUM down the Occurrences column returns 140.",
+        },
+        formula: "=SUM(B2:B21) → 140",
+        shortcut: "Ctrl + Shift + ↓",
+      },
+      {
+        title: { ru: "Закрепите знаменатель клавишей F4", en: "Lock the denominator with F4" },
+        body: {
+          ru: "Введите =B2/I1 и нажмите F4 — появятся знаки доллара, $I$1. Теперь при протягивании числитель поедет вниз (B3, B4…), а знаменатель останется 140. Без F4 формула через две строки начнёт делить на пустую ячейку.",
+          en: "Enter =B2/I1 and press F4 — dollar signs appear, $I$1. Now the numerator walks down (B3, B4…) while the denominator stays on 140. Without F4 the formula starts dividing by an empty cell two rows later.",
+        },
+        formula: "=B2/$I$1 → 0,0214",
+        shortcut: "F4",
+      },
+      {
+        title: { ru: "Заполните столбец и проверьте себя", en: "Fill the column and check yourself" },
+        body: {
+          ru: "Наведите курсор на правый нижний угол ячейки и дважды кликните по «крестику» — столбец заполнится до конца данных. Затем просуммируйте вероятности: должно получиться ровно 1. Если нет — что-то потеряно.",
+          en: "Hover over the cell's bottom-right corner and double-click the crosshair — the column fills to the end of the data. Then sum the probabilities: the answer must be exactly 1. If it is not, something was left out.",
+        },
+        formula: "=SUM(C2:C21) → 1,000",
+      },
+      {
+        title: { ru: "E(X) одной функцией", en: "E(X) in a single function" },
+        body: {
+          ru: "SUMPRODUCT берёт два массива, перемножает их поэлементно и складывает результаты. Это буквально Σ x·p(x) — определение математического ожидания и определение функции совпадают.",
+          en: "SUMPRODUCT takes two arrays, multiplies them element by element and adds the results. That is literally Σ x·p(x) — the definition of expected value and the definition of the function are the same expression.",
+        },
+        formula: "=SUMPRODUCT(A2:A21; C2:C21) → 11,49",
+      },
+      {
+        title: { ru: "Столбец квадратов отклонений", en: "The column of squared deviations" },
+        body: {
+          ru: "Для стандартного отклонения нужен промежуточный столбец (x − μ)². Ссылку на ячейку со средним снова закрепите через F4, иначе при протягивании μ «уедет» вниз вместе с формулой.",
+          en: "The standard deviation needs an intermediate (x − μ)² column. Lock the reference to the mean with F4 again, or μ will drift down the sheet along with the formula.",
+        },
+        formula: "=(A2−$I$4)^2 → 109,95",
+        shortcut: "F4",
+      },
+      {
+        title: { ru: "Стандартное отклонение", en: "The standard deviation" },
+        body: {
+          ru: "σ = √Σ(x − μ)²·p(x): тот же SUMPRODUCT, только теперь по столбцу квадратов и столбцу вероятностей, и всё под корнем.",
+          en: "σ = √Σ(x − μ)²·p(x): the same SUMPRODUCT, this time over the squared-deviation column and the probability column, with the whole thing under a root.",
+        },
+        formula: "=SQRT(SUMPRODUCT(D2:D21; C2:C21)) → 6,205",
+      },
+      {
+        title: { ru: "Превратите числа в решение о запасе", en: "Turn the numbers into a stocking decision" },
+        body: {
+          ru: "Ожидание 11,49 при σ = 6,205 означает, что 68 % дней спрос лежит между 5,28 и 17,69. Держать на полке 11–12 штук — значит примерно в половине дней терять продажи. Решение принимается по верхней границе, а не по среднему.",
+          en: "An expectation of 11.49 with σ = 6.205 means 68 % of days see demand between 5.28 and 17.69. Stocking 11 or 12 units means losing sales on roughly half the days. The decision follows the upper bound, not the average.",
+        },
+        formula: "11,49 ± 6,205 → 5,28 … 17,69",
+      },
+    ],
+    takeaway: {
+      ru: "Проверка «сумма вероятностей равна 1» — единственный встроенный контроль правильности в этом расчёте. Не пропускайте её.",
+      en: "The 'probabilities sum to 1' check is the only built-in correctness test in this calculation. Never skip it.",
+    },
+  },
+  {
+    id: "m2-normal-areas",
+    lesson: "Lessons 2-5.4–2-5.6",
+    title: {
+      ru: "«Меньше», «больше» и «между» на примере SAT",
+      en: "'Less than', 'greater than' and 'between' on the SAT",
+    },
+    goal: {
+      ru: "Освоить единственный приём, покрывающий все три типа вопросов о нормальном распределении.",
+      en: "Master the single trick that covers all three kinds of normal-distribution question.",
+    },
+    dataset: {
+      ru: "SAT Example 1–3.xlsx — секция SAT со средним 500 и стандартным отклонением 100",
+      en: "SAT Example 1–3.xlsx — an SAT section with a mean of 500 and a standard deviation of 100",
+    },
+    steps: [
+      {
+        title: { ru: "Сначала нарисуйте", en: "Draw it first" },
+        body: {
+          ru: "Совет, который лектор повторяет в каждом видео: набросайте колокол, отметьте среднее, отметьте границы из вопроса и заштрихуйте нужную площадь. Excel умеет ровно одно — возвращать площадь СЛЕВА от значения. Всё остальное вы выражаете через неё.",
+          en: "The advice the lecturer repeats in every video: sketch the bell, mark the mean, mark the bounds from the question and shade the area you want. Excel does exactly one thing — return the area to the LEFT of a value. Everything else you express through that.",
+        },
+      },
+      {
+        title: { ru: "«Меньше чем» — прямой случай", en: "'Less than' — the direct case" },
+        body: {
+          ru: "Балл 458 при среднем 500. Ещё до расчёта ясно: результат ниже среднего, значит процентиль точно меньше 50. Такую проверку стоит делать всегда — она ловит ошибки в аргументах.",
+          en: "A score of 458 against a mean of 500. Before computing anything you know the result is below average, so the percentile must be under 50. Always run that sanity check — it catches argument mix-ups.",
+        },
+        formula: "=NORM.DIST(458; 500; 100; 1) → 0,337243",
+      },
+      {
+        title: { ru: "«Больше чем» — дополнение до единицы", en: "'Greater than' — the complement" },
+        body: {
+          ru: "Вопрос про балл выше 635. Excel даёт левую площадь, нам нужна правая, а полная площадь под кривой равна единице. Значит вычитаем: 1 − 0,9115 = 0,0885.",
+          en: "The question asks about scores above 635. Excel hands you the left area, you want the right, and the total area under the curve is one. So subtract: 1 − 0.9115 = 0.0885.",
+        },
+        formula: "=1 − NORM.DIST(635; 500; 100; 1) → 0,088508",
+      },
+      {
+        title: { ru: "«Между» — разность двух площадей", en: "'Between' — one area minus another" },
+        body: {
+          ru: "Баллы от 490 до 550: «всё слева от 550» минус «всё слева от 490» оставляет ровно полосу между ними. Порядок принципиален: из большего вычитаем меньшее, иначе получится отрицательная вероятность.",
+          en: "Scores from 490 to 550: 'everything left of 550' minus 'everything left of 490' leaves exactly the strip between them. Order matters: larger minus smaller, or you get a negative probability.",
+        },
+        formula: "=NORM.DIST(550;500;100;1) − NORM.DIST(490;500;100;1) → 0,23129",
+      },
+      {
+        title: { ru: "Когда пригодится NORM.S.DIST", en: "When NORM.S.DIST earns its keep" },
+        body: {
+          ru: "Если z уже посчитан или дан в задаче, обращайтесь к стандартной кривой напрямую: NORM.S.DIST(z; 1). Она не спрашивает μ и σ, потому что знает их — ноль и единица.",
+          en: "When z is already computed or handed to you, address the standard curve directly: NORM.S.DIST(z, 1). It never asks for μ and σ because it knows them — zero and one.",
+        },
+        formula: "=NORM.S.DIST(0,5; 1) → 0,6915",
+      },
+    ],
+    takeaway: {
+      ru: "Три задачи — один приём: выразите заштрихованную площадь через площади слева, которые умеет считать Excel.",
+      en: "Three questions, one trick: express the shaded area through the left-hand areas Excel knows how to compute.",
+    },
+  },
+  {
+    id: "m2-norm-inv",
+    lesson: "Lesson 2-5.7",
+    title: {
+      ru: "Обратная задача: балл по заданному процентилю",
+      en: "The inverse problem: a score from a required percentile",
+    },
+    goal: {
+      ru: "Вуз принимает верхние 5 %. Какой балл нужен, чтобы попасть в 95-й процентиль?",
+      en: "A school takes the top 5 %. Which score puts you at the 95th percentile?",
+    },
+    dataset: {
+      ru: "SAT Example 4.xlsx — среднее 500, стандартное отклонение 100",
+      en: "SAT Example 4.xlsx — mean 500, standard deviation 100",
+    },
+    steps: [
+      {
+        title: { ru: "Поймите, что изменилось", en: "See what flipped" },
+        body: {
+          ru: "Раньше вы знали значение и искали вероятность. Теперь наоборот: вероятность известна (0,95), нужно само значение. Это работа для функций с INV в имени.",
+          en: "Until now you knew the value and wanted the probability. It is the other way round here: the probability is given (0.95) and the value is missing. That is a job for the INV functions.",
+        },
+      },
+      {
+        title: { ru: "Способ первый — за один шаг", en: "Route one — a single step" },
+        body: {
+          ru: "NORM.INV принимает вероятность, среднее и стандартное отклонение и сразу возвращает значение. Получается 664,4854, а поскольку балл SAT целый — нужно набрать 665.",
+          en: "NORM.INV takes the probability, the mean and the standard deviation and returns the value outright. It gives 664.4854, and since SAT scores are integers you need 665.",
+        },
+        formula: "=NORM.INV(0,95; 500; 100) → 664,4854",
+      },
+      {
+        title: { ru: "Способ второй — сначала z", en: "Route two — get the z first" },
+        body: {
+          ru: "NORM.S.INV просит только вероятность: ни среднее, ни стандартное отклонение ей не нужны, потому что она работает со стандартной кривой. Возвращает 1,644854 — то самое 1,645, которое в таблице приходится получать интерполяцией.",
+          en: "NORM.S.INV asks for the probability alone — no mean, no standard deviation, because it works on the standard curve. It returns 1.644854, the very 1.645 that the table only yields by interpolation.",
+        },
+        formula: "=NORM.S.INV(0,95) → 1,644854",
+      },
+      {
+        title: { ru: "Переведите z обратно в баллы", en: "Convert the z back into a score" },
+        body: {
+          ru: "Формула z-оценки, решённая относительно x: x = μ + zσ. Здесь 500 + 1,645 × 100 = 664,49 — тот же ответ. Эту перевёрнутую формулу нужно знать наизусть: она понадобится в доверительных интервалах Модулей 4–6.",
+          en: "The z formula solved for x: x = μ + zσ. Here 500 + 1.645 × 100 = 664.49 — the same answer. Know this inverted form by heart: it returns in the confidence intervals of Modules 4–6.",
+        },
+        formula: "=500 + (H6 * 100) → 664,4854",
+      },
+      {
+        title: { ru: "Какой способ выбирать", en: "Which route to take" },
+        body: {
+          ru: "Ответы совпадают, но NORM.INV даёт результат сразу, а NORM.S.INV требует второго шага. Знать нужно оба: иногда в задаче уже фигурирует z, и тогда стандартная версия оказывается короче.",
+          en: "The answers agree, but NORM.INV gets there at once while NORM.S.INV needs a second step. Know both: sometimes the problem already speaks in z, and then the standard version is the shorter road.",
+        },
+      },
+    ],
+    takeaway: {
+      ru: "Запомните z = 1,645 для 95-го процентиля. Вместе с 1,96 и 2,576 оно будет встречаться до конца курса.",
+      en: "Commit z = 1.645 for the 95th percentile to memory. Along with 1.96 and 2.576 it recurs to the end of the course.",
     },
   },
 ];

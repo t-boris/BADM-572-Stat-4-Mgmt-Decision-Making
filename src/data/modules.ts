@@ -6,7 +6,7 @@ import type { ModuleMeta } from "@/lib/types";
  * "Exploring and Producing Data for Business Decision Making" plus the
  * assigned OnlineStatBook readings (onlinestatbook.com).
  *
- * Modules 2–4 are placeholders: their titles come from the course roadmap and
+ * Modules 3–4 are placeholders: their titles come from the course roadmap and
  * their pages fill in as each module's material is added.
  */
 export const MODULES: ModuleMeta[] = [
@@ -37,16 +37,30 @@ export const MODULES: ModuleMeta[] = [
   },
   {
     id: 2,
-    slug: "module-2",
-    title: { ru: "Модуль 2", en: "Module 2" },
-    subtitle: {
-      ru: "Материал будет добавлен, когда появится модуль.",
-      en: "Material will be added once the module is supplied.",
+    slug: "descriptive-statistics",
+    title: {
+      ru: "Описательная статистика и распределения вероятностей",
+      en: "Descriptive Statistics and Probability Distributions",
     },
-    topics: [],
+    subtitle: {
+      ru: "Центр, разброс, позиция — и нормальная кривая, которая переводит всё это в вероятности.",
+      en: "Centre, spread, position — and the normal curve that turns all three into probabilities.",
+    },
+    topics: [
+      { ru: "Среднее и медиана: какая мера центра когда честнее", en: "Mean and median: which measure of centre is honest when" },
+      { ru: "Выбросы, скошенность и устойчивость медианы", en: "Outliers, skewness and why the median is robust" },
+      { ru: "Размах, дисперсия и стандартное отклонение", en: "Range, variance and standard deviation" },
+      { ru: "Почему выборочная дисперсия делится на n − 1", en: "Why the sample variance divides by n − 1" },
+      { ru: "Процентили, z-оценка и эмпирическое правило 68–95–99,7", en: "Percentiles, the z-score and the 68–95–99.7 rule" },
+      { ru: "Дискретные и непрерывные случайные величины", en: "Discrete and continuous random variables" },
+      { ru: "Распределение вероятностей, E(X) и σ дискретной величины", en: "Probability distributions, E(X) and σ of a discrete variable" },
+      { ru: "Нормальное распределение и стандартизация", en: "The normal distribution and standardizing" },
+      { ru: "Задачи «меньше», «больше» и «между» в Excel", en: "'Less than', 'greater than' and 'between' in Excel" },
+      { ru: "Таблица стандартного нормального распределения", en: "The standard normal (z) table" },
+    ],
     colorKey: "m2",
     iconName: "Sigma",
-    status: "coming-soon",
+    status: "ready",
   },
   {
     id: 3,

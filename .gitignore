@@ -11,3 +11,6 @@ _to_delete/
 # local secrets — never commit
 .vercel-auth.json
 .vercel/
+
+# TypeScript incremental build info
+*.tsbuildinfo

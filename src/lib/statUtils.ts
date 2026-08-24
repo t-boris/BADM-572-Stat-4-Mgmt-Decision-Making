@@ -229,3 +229,213 @@ export function seededRandom(seed: number): () => number {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
+
+/* -------------------------------------------------------------------------- */
+/*  Module 2 — descriptive statistics and the normal distribution.            */
+/*  Mirrors the Excel functions the course uses: MEDIAN, STDEV.S, STDEV.P,    */
+/*  SUMPRODUCT, NORM.DIST, NORM.S.DIST, NORM.INV, NORM.S.INV.                 */
+/* -------------------------------------------------------------------------- */
+
+/** Excel MEDIAN: middle value, or the average of the two middle values. */
+export function median(values: number[]): number {
+  const clean = values.filter((v) => Number.isFinite(v)).sort((a, b) => a - b);
+  if (!clean.length) return 0;
+  const mid = Math.floor(clean.length / 2);
+  return clean.length % 2 === 1
+    ? clean[mid]
+    : (clean[mid - 1] + clean[mid]) / 2;
+}
+
+/** Excel VAR.S — divides by n − 1 (the lecture's sample variance s²). */
+export function sampleVariance(values: number[]): number {
+  const clean = values.filter((v) => Number.isFinite(v));
+  if (clean.length < 2) return 0;
+  const m = mean(clean);
+  return clean.reduce((a, v) => a + (v - m) ** 2, 0) / (clean.length - 1);
+}
+
+/** Excel VAR.P — divides by N (the lecture's population variance σ²). */
+export function populationVariance(values: number[]): number {
+  const clean = values.filter((v) => Number.isFinite(v));
+  if (!clean.length) return 0;
+  const m = mean(clean);
+  return clean.reduce((a, v) => a + (v - m) ** 2, 0) / clean.length;
+}
+
+/** Excel STDEV.S. */
+export function sampleStdDev(values: number[]): number {
+  return Math.sqrt(sampleVariance(values));
+}
+
+/** Excel STDEV.P. */
+export function populationStdDev(values: number[]): number {
+  return Math.sqrt(populationVariance(values));
+}
+
+/** Largest minus smallest — the lecture's crudest measure of dispersion. */
+export function range(values: number[]): number {
+  const clean = values.filter((v) => Number.isFinite(v));
+  if (!clean.length) return 0;
+  return max(clean) - min(clean);
+}
+
+/** z = (x − μ) / σ. Returns 0 when σ is 0 so the UI never shows NaN. */
+export function zScore(x: number, mu: number, sigma: number): number {
+  return sigma === 0 ? 0 : (x - mu) / sigma;
+}
+
+/** x = μ + zσ — the z formula solved for the value (Lesson 2-5.7). */
+export function valueFromZ(z: number, mu: number, sigma: number): number {
+  return mu + z * sigma;
+}
+
+/**
+ * Standard normal CDF Φ(z) = P(Z ≤ z), i.e. Excel's NORM.S.DIST(z, 1).
+ * Uses an Abramowitz & Stegun 7.1.26 error-function approximation; the
+ * absolute error stays below 1.5e-7, well past the four decimals the
+ * course's z-table prints.
+ */
+export function standardNormalCdf(z: number): number {
+  const sign = z < 0 ? -1 : 1;
+  const x = Math.abs(z) / Math.SQRT2;
+  const t = 1 / (1 + 0.3275911 * x);
+  const y =
+    1 -
+    ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) *
+      t +
+      0.254829592) *
+      t *
+      Math.exp(-x * x);
+  return 0.5 * (1 + sign * y);
+}
+
+/** Excel NORM.DIST(x, mean, sd, 1). */
+export function normalCdf(x: number, mu: number, sigma: number): number {
+  return standardNormalCdf(zScore(x, mu, sigma));
+}
+
+/** Standard normal density φ(z) — used to draw the bell curve. */
+export function standardNormalPdf(z: number): number {
+  return Math.exp(-(z * z) / 2) / Math.sqrt(2 * Math.PI);
+}
+
+/** Normal density with an arbitrary μ and σ. */
+export function normalPdf(x: number, mu: number, sigma: number): number {
+  if (sigma <= 0) return 0;
+  return standardNormalPdf(zScore(x, mu, sigma)) / sigma;
+}
+
+/**
+ * Inverse standard normal Φ⁻¹(p), i.e. Excel's NORM.S.INV(p).
+ * Acklam's rational approximation, refined by one Halley step against
+ * standardNormalCdf so NORM.S.INV(0.95) lands on 1.6449 exactly enough.
+ */
+export function standardNormalInv(p: number): number {
+  if (p <= 0) return -Infinity;
+  if (p >= 1) return Infinity;
+
+  const a = [
+    -3.969683028665376e1, 2.209460984245205e2, -2.759285104469687e2,
+    1.38357751867269e2, -3.066479806614716e1, 2.506628277459239,
+  ];
+  const b = [
+    -5.447609879822406e1, 1.615858368580409e2, -1.556989798598866e2,
+    6.680131188771972e1, -1.328068155288572e1,
+  ];
+  const c = [
+    -7.784894002430293e-3, -3.223964580411365e-1, -2.400758277161838,
+    -2.549732539343734, 4.374664141464968, 2.938163982698783,
+  ];
+  const d = [
+    7.784695709041462e-3, 3.224671290700398e-1, 2.445134137142996,
+    3.754408661907416,
+  ];
+
+  const pLow = 0.02425;
+  const pHigh = 1 - pLow;
+  let x: number;
+
+  if (p < pLow) {
+    const q = Math.sqrt(-2 * Math.log(p));
+    x =
+      (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) /
+      ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1);
+  } else if (p <= pHigh) {
+    const q = p - 0.5;
+    const r = q * q;
+    x =
+      ((((((a[0] * r + a[1]) * r + a[2]) * r + a[3]) * r + a[4]) * r + a[5]) *
+        q) /
+      (((((b[0] * r + b[1]) * r + b[2]) * r + b[3]) * r + b[4]) * r + 1);
+  } else {
+    const q = Math.sqrt(-2 * Math.log(1 - p));
+    x = -(
+      (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) /
+      ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1)
+    );
+  }
+
+  // One Halley refinement against the CDF above.
+  const e = standardNormalCdf(x) - p;
+  const u = e * Math.sqrt(2 * Math.PI) * Math.exp((x * x) / 2);
+  return x - u / (1 + (x * u) / 2);
+}
+
+/** Excel NORM.INV(p, mean, sd). */
+export function normalInv(p: number, mu: number, sigma: number): number {
+  return mu + sigma * standardNormalInv(p);
+}
+
+/** One row of a discrete probability distribution (Lesson 2-4). */
+export interface DiscreteOutcome {
+  value: number;
+  frequency: number;
+  probability: number;
+  cumulative: number;
+}
+
+/** Turn an outcome/frequency table into probabilities and a CDF. */
+export function discreteDistribution(
+  rows: { value: number; frequency: number }[],
+): DiscreteOutcome[] {
+  const total = rows.reduce((a, r) => a + r.frequency, 0) || 1;
+  let running = 0;
+  return rows.map((r) => {
+    const probability = r.frequency / total;
+    running += probability;
+    return {
+      value: r.value,
+      frequency: r.frequency,
+      probability,
+      cumulative: running,
+    };
+  });
+}
+
+/** E(X) = Σ x·p(x) — exactly Excel's SUMPRODUCT of the two columns. */
+export function expectedValue(rows: DiscreteOutcome[]): number {
+  return rows.reduce((a, r) => a + r.value * r.probability, 0);
+}
+
+/** σ = √Σ(x − μ)²·p(x) for a discrete random variable. */
+export function discreteStdDev(rows: DiscreteOutcome[]): number {
+  const mu = expectedValue(rows);
+  return Math.sqrt(
+    rows.reduce((a, r) => a + (r.value - mu) ** 2 * r.probability, 0),
+  );
+}
+
+/**
+ * Percentile rank: the share of observations strictly below `x`, which is
+ * what the lecture means by "the approximate percentage of values below".
+ */
+export function percentileRank(values: number[], x: number): number {
+  const clean = values.filter((v) => Number.isFinite(v));
+  if (!clean.length) return 0;
+  return clean.filter((v) => v < x).length / clean.length;
+}
+
+/** Format a probability the way the course's z-table prints it. */
+export function toProbability(value: number, digits = 4): string {
+  return value.toFixed(digits);
+}
