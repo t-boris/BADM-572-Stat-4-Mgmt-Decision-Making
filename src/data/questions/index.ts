@@ -1,14 +1,16 @@
 import type { QuizQuestion, ModuleId } from "@/lib/types";
 import { module1Questions } from "./module1";
 import { module2Questions } from "./module2";
+import { module3Questions } from "./module3";
 
 /**
  * Master question bank. Each module file owns its own pool with the
- * 20/60/20 easy/medium/hard mix. Add `module3.ts` etc. as modules land.
+ * 20/60/20 easy/medium/hard mix. Add each module file as its material lands.
  */
 export const QUESTIONS: QuizQuestion[] = [
   ...module1Questions,
   ...module2Questions,
+  ...module3Questions,
 ];
 
 export function getQuestionsByModule(moduleId: ModuleId): QuizQuestion[] {

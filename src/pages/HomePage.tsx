@@ -18,7 +18,7 @@ import { EXCEL_GUIDES } from "@/data/excelGuides";
 import { getIcon } from "@/lib/icons";
 import { useI18n } from "@/i18n/I18nContext";
 
-const INTERACTIVES = 17;
+const INTERACTIVES = 20;
 
 export default function HomePage() {
   const { t, L, pick } = useI18n();

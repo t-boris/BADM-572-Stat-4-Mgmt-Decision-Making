@@ -20,7 +20,8 @@ export interface ExcelGuide {
 /**
  * Transcribed from the Excel illustration videos of Module 1
  * (Lessons 1-2.2, 1-2.3, 1-2.4, 1-3.2, 1-4.2, 1-5.2) and Module 2
- * (Lessons 2-1.2, 2-2.2, 2-3.2, 2-4.2, 2-5.2…2-5.7).
+ * (Lessons 2-1.2, 2-2.2, 2-3.2, 2-4.2, 2-5.2…2-5.7), and Module 3
+ * (Lessons 3-2.2 and 3-3.3).
  */
 export const EXCEL_GUIDES: ExcelGuide[] = [
   {
@@ -713,6 +714,136 @@ export const EXCEL_GUIDES: ExcelGuide[] = [
     takeaway: {
       ru: "Запомните z = 1,645 для 95-го процентиля. Вместе с 1,96 и 2,576 оно будет встречаться до конца курса.",
       en: "Commit z = 1.645 for the 95th percentile to memory. Along with 1.96 and 2.576 it recurs to the end of the course.",
+    },
+  },
+  {
+    id: "m3-sampling",
+    lesson: "Lesson 3-2.2",
+    title: {
+      ru: "Случайная выборка в Excel",
+      en: "Random sampling in Excel",
+    },
+    goal: {
+      ru: "Взять пять независимых выборок по 130 температур New York и сравнить их средние.",
+      en: "Draw five independent samples of 130 New York temperatures and compare their means.",
+    },
+    dataset: {
+      ru: "Daily Temperature.xlsx — New York, диапазон E1:E26771",
+      en: "Daily Temperature.xlsx — New York, range E1:E26771",
+    },
+    steps: [
+      {
+        title: { ru: "Выделите всю population", en: "Select the full population" },
+        body: {
+          ru: "Кликните в заголовок New York и нажмите Ctrl+Shift+↓. В окне Sampling этот диапазон станет Input Range. Если заголовок включён, отметьте Labels.",
+          en: "Click the New York header and press Ctrl+Shift+↓. Use that selection as the Sampling dialog's Input Range. Check Labels when the header is included.",
+        },
+        formula: "$E$1:$E$26771",
+        shortcut: "Ctrl + Shift + ↓",
+      },
+      {
+        title: { ru: "Откройте Sampling", en: "Open Sampling" },
+        body: {
+          ru: "На вкладке Data выберите Data Analysis → Sampling. Если Data Analysis отсутствует, сначала включите Analysis ToolPak в Excel Add-ins.",
+          en: "On the Data tab choose Data Analysis → Sampling. If Data Analysis is missing, enable the Analysis ToolPak under Excel Add-ins first.",
+        },
+        shortcut: "Data → Data Analysis → Sampling",
+      },
+      {
+        title: { ru: "Выберите Random", en: "Choose Random" },
+        body: {
+          ru: "Periodic берёт каждую k-ю строку и может попасть в скрытый цикл. Для честной random sample выберите Random. Поле Number of Samples в этом окне означает размер одной выборки — здесь 130, — а не число повторений.",
+          en: "Periodic takes every kth row and can lock onto a hidden cycle. Choose Random for a genuine random sample. In this dialog Number of Samples means the size of one sample — 130 here — not the number of repetitions.",
+        },
+        formula: "Sampling Method: Random   Number of Samples: 130",
+      },
+      {
+        title: { ru: "Повторите пять раз", en: "Repeat five times" },
+        body: {
+          ru: "Первую sample выведите в новый worksheet. Следующие кладите в соседние столбцы через Output Range. После выбора Output Range обязательно кликните в его поле до перехода на лист — иначе Excel перезапишет Input Range.",
+          en: "Send the first sample to a new worksheet. Put later samples in adjacent columns with Output Range. After selecting Output Range, click inside that field before moving to the sheet or Excel may overwrite the Input Range.",
+        },
+      },
+      {
+        title: { ru: "Посчитайте пять средних", en: "Compute five means" },
+        body: {
+          ru: "AVERAGE по каждому столбцу даёт 55,9781; 54,9119; 58,0335; 57,7691; 55,7711. Population одна, но statistic меняется — именно эту изменчивость описывает sampling distribution.",
+          en: "AVERAGE down each column gives 55.9781, 54.9119, 58.0335, 57.7691 and 55.7711. The population is fixed but the statistic changes — the variation described by a sampling distribution.",
+        },
+        formula: "=AVERAGE(A2:A131)",
+      },
+    ],
+    takeaway: {
+      ru: "Одна выборка даёт одну возможную x̄. Повторный Sampling показывает, почему точечная оценка всегда сопровождается standard error.",
+      en: "One sample gives one possible x̄. Repeated Sampling shows why a point estimate always comes with a standard error.",
+    },
+  },
+  {
+    id: "m3-clt-excel",
+    lesson: "Lesson 3-3.3",
+    title: {
+      ru: "ЦПТ и standard error в Excel",
+      en: "The CLT and standard error in Excel",
+    },
+    goal: {
+      ru: "Сравнить bimodal population температур с распределением 100 000 выборочных средних.",
+      en: "Compare a bimodal temperature population with 100,000 sample means.",
+    },
+    dataset: {
+      ru: "Daily Temperature.xlsx — 100 000 samples, в каждой 72 случайных даты New York",
+      en: "Daily Temperature.xlsx — 100,000 samples, each with 72 random New York dates",
+    },
+    steps: [
+      {
+        title: { ru: "Проверьте population", en: "Audit the population" },
+        body: {
+          ru: "Среднее всех температур — 55,2°F, standard deviation — 17,3796°F. Исходная histogram имеет два сезонных пика и не является normal.",
+          en: "The mean of all temperatures is 55.2°F and the standard deviation is 17.3796°F. The raw histogram has two seasonal peaks and is not normal.",
+        },
+        formula: "=AVERAGE(population_range) → 55,2   =STDEV.P(population_range) → 17,3796",
+      },
+      {
+        title: { ru: "Опишите 100 000 средних", en: "Describe the 100,000 means" },
+        body: {
+          ru: "Среднее столбца sample means снова 55,2. STDEV.S этого столбца даёт около 2,05 — это эмпирическая standard error.",
+          en: "The mean of the sample-means column is again 55.2. STDEV.S on that column gives about 2.05 — the empirical standard error.",
+        },
+        formula: "=AVERAGE(B4:B100003) → 55,2   =STDEV.S(B4:B100003) → 2,05",
+      },
+      {
+        title: { ru: "Посчитайте SE по формуле", en: "Compute SE from the formula" },
+        body: {
+          ru: "Population SD делится на квадратный корень из размера каждой sample. Теория даёт 2,048253 — почти точно результат симуляции.",
+          en: "Divide the population SD by the square root of each sample's size. Theory gives 2.048253 — almost exactly the simulation result.",
+        },
+        formula: "=17,37963233/SQRT(72) → 2,048253",
+      },
+      {
+        title: { ru: "Постройте bins", en: "Build the bins" },
+        body: {
+          ru: "Минимальная x̄ около 47,2, максимальная 64,2. Создайте bins от 45 до 66 с шагом 0,5 через Home → Fill → Series → Columns.",
+          en: "The smallest x̄ is about 47.2 and the largest 64.2. Create bins from 45 to 66 by 0.5 with Home → Fill → Series → Columns.",
+        },
+      },
+      {
+        title: { ru: "Постройте histogram средних", en: "Build the histogram of means" },
+        body: {
+          ru: "Data Analysis → Histogram: Input Range — 100 000 sample means, Bin Range — созданный столбец; отметьте Labels и Chart Output. В отличие от parent population, histogram средних почти normal и значительно уже.",
+          en: "Data Analysis → Histogram: use the 100,000 sample means as Input Range and the new column as Bin Range; check Labels and Chart Output. Unlike the parent population, the histogram of means is nearly normal and much narrower.",
+        },
+      },
+      {
+        title: { ru: "Наложите эмпирическое правило", en: "Apply the Empirical Rule" },
+        body: {
+          ru: "При μ = 55,2 и SE = 2,05 зоны равны 53,15–57,25; 51,10–59,30; 49,05–61,35 для 68%, 95% и 99,7% sample means.",
+          en: "With μ = 55.2 and SE = 2.05, the bands are 53.15–57.25, 51.10–59.30 and 49.05–61.35 for 68%, 95% and 99.7% of sample means.",
+        },
+        formula: "=55,2 ± k*2,05   (k = 1, 2, 3)",
+      },
+    ],
+    takeaway: {
+      ru: "Симуляция и σ/√n дают одну SE. ЦПТ позволяет применять normal curve к sample means, хотя исходные температуры bimodal.",
+      en: "Simulation and σ/√n give the same SE. The CLT lets us use the normal curve for sample means even though the raw temperatures are bimodal.",
     },
   },
 ];

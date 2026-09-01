@@ -21,10 +21,12 @@ import type { ModuleId } from "@/lib/types";
 
 const Module1Content = lazy(() => import("@/components/modules/Module1Content"));
 const Module2Content = lazy(() => import("@/components/modules/Module2Content"));
+const Module3Content = lazy(() => import("@/components/modules/Module3Content"));
 
 const MODULE_CONTENT: Partial<Record<ModuleId, ComponentType>> = {
   1: Module1Content,
   2: Module2Content,
+  3: Module3Content,
 };
 
 export default function ModulePage() {

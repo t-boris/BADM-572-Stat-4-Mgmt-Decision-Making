@@ -6,8 +6,7 @@ import type { ModuleMeta } from "@/lib/types";
  * "Exploring and Producing Data for Business Decision Making" plus the
  * assigned OnlineStatBook readings (onlinestatbook.com).
  *
- * Modules 3–4 are placeholders: their titles come from the course roadmap and
- * their pages fill in as each module's material is added.
+ * Module 4 remains a placeholder; its page fills in when the material lands.
  */
 export const MODULES: ModuleMeta[] = [
   {
@@ -64,16 +63,29 @@ export const MODULES: ModuleMeta[] = [
   },
   {
     id: 3,
-    slug: "module-3",
-    title: { ru: "Модуль 3", en: "Module 3" },
-    subtitle: {
-      ru: "Материал будет добавлен, когда появится модуль.",
-      en: "Material will be added once the module is supplied.",
+    slug: "sampling-and-clt",
+    title: {
+      ru: "Выборка и центральная предельная теорема",
+      en: "Sampling and the Central Limit Theorem",
     },
-    topics: [],
+    subtitle: {
+      ru: "Как получить честные данные и почему средние больших выборок образуют нормальную кривую.",
+      en: "How to produce trustworthy data and why large-sample means form a normal curve.",
+    },
+    topics: [
+      { ru: "Response и independent variables; experimental и observational studies", en: "Response and independent variables; experimental and observational studies" },
+      { ru: "Cross-sectional, time-series и longitudinal data", en: "Cross-sectional, time-series and longitudinal data" },
+      { ru: "Volunteer и convenience sampling; bias и nonresponse", en: "Volunteer and convenience sampling; bias and nonresponse" },
+      { ru: "Simple random, stratified и cluster sampling", en: "Simple random, stratified and cluster sampling" },
+      { ru: "Размер выборки и закон убывающей отдачи", en: "Sample size and diminishing returns" },
+      { ru: "Sampling в Excel и повторные случайные выборки", en: "Sampling in Excel and repeated random samples" },
+      { ru: "Sampling distribution и standard error", en: "Sampling distributions and standard error" },
+      { ru: "Центральная предельная теорема для выборочного среднего", en: "The Central Limit Theorem for the sample mean" },
+      { ru: "Выборочная доля p̂ и её standard error", en: "The sample proportion p̂ and its standard error" },
+    ],
     colorKey: "m3",
-    iconName: "Dice5",
-    status: "coming-soon",
+    iconName: "Network",
+    status: "ready",
   },
   {
     id: 4,
